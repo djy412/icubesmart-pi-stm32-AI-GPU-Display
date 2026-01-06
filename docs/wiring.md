@@ -159,9 +159,3 @@ Display flickers	Match baud rate
 3. Tag `v1.0`
 4. Add demo video or GIF
 5. Add MIT license file
-
-If you want, I can:
-- Create the `gpu_to_uart.service`
-- Review your repository before first public release
-- Write a polished **project announcement** for GitHub or Reddit
-
