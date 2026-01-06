@@ -101,3 +101,67 @@ Disable login shell
 Enable serial hardware
 
 Reboot
+
+Verify UART Device
+ls -l /dev/ttyAMA0
+Expected:
+/dev/ttyAMA0
+
+Install Dependencies
+sudo apt update
+sudo apt install -y python3 python3-pip openssh-client
+pip3 install pyserial
+
+SSH Setup (Windows GPU Host)
+
+Generate key:
+ssh-keygen -t ed25519
+
+Copy public key to Windows:
+type id_ed25519.pub >> C:\Users\USERNAME\.ssh\authorized_keys
+
+Verify:
+ssh USERNAME@WINDOWS_IP
+Must connect without password.
+
+
+Run Script Manually
+python3 gpu_to_uart.py
+
+Expected:
+  No errors
+  LED cube responds
+
+Enable on Boot (systemd)
+sudo cp systemd/gpu_to_uart.service /etc/systemd/system/
+sudo systemctl daemon-reexec
+sudo systemctl enable gpu_to_uart
+sudo systemctl start gpu_to_uart
+
+
+Logs
+journalctl -u gpu_to_uart -f
+
+Troubleshooting
+Issue	Fix
+Permission denied	Add user to dialout
+No UART	Recheck raspi-config
+SSH timeout	Verify key + firewall
+Display flickers	Match baud rate
+
+
+---
+
+## Next recommended steps
+
+1. Add **wiring diagram image**
+2. Commit STM32 `.ioc` file
+3. Tag `v1.0`
+4. Add demo video or GIF
+5. Add MIT license file
+
+If you want, I can:
+- Create the `gpu_to_uart.service`
+- Review your repository before first public release
+- Write a polished **project announcement** for GitHub or Reddit
+
